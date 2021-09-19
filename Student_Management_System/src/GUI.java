@@ -16,14 +16,14 @@ public class GUI extends JFrame {
 	private JButton backToMainPanel;
 	private JTextArea detailsArea;
 	
-	CardLayout layout = new CardLayout();
+	CardLayout layout = new CardLayout(); //Use the Card Layout
 	
 	JPanel deck = new JPanel();
 	JPanel panel = new JPanel(); //1st card
 	JPanel secondpanel = new JPanel(); //2nd card
 	
-	private ArrayList<Course> courses = new ArrayList<Course>();
-	private ArrayList<Student> student = new ArrayList<Student>();
+	private ArrayList<Course> courses = new ArrayList<Course>(); //Add courses in a list
+	private ArrayList<Student> student = new ArrayList<Student>(); //Add students in a list
 	
 	public GUI() {
 		deck.setLayout(layout); //Set the layout to card layout
@@ -34,6 +34,7 @@ public class GUI extends JFrame {
 		
 		panel.setLayout(null);
 		
+		//Add labels and their text fields
 		name = new JLabel("Name:");
 		name.setBounds(10, 5, 100, 20);
 		name.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
@@ -54,11 +55,13 @@ public class GUI extends JFrame {
 		idField.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
 		panel.add(idField);
 		
+		//Button to create the student
 		createStudent = new JButton("Create student");
 		createStudent.setBounds(250, 20, 150, 20);
 		createStudent.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
 		panel.add(createStudent);
 		
+		//Add the 3 buttons, a label and a text field for the course
 		course = new JLabel("Course:");
 		course.setBounds(125, 100, 100, 20);
 		course.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
@@ -87,30 +90,30 @@ public class GUI extends JFrame {
 		createStudent.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String name = nameField.getText();
-				String id = idField.getText();
+				String name = nameField.getText(); //Get the name
+				String id = idField.getText(); //Get the id
 				boolean flag = false;
 				
-				if(name.isEmpty() || id.isEmpty()) {
+				if(name.isEmpty() || id.isEmpty()) { //If they are empty show message
 					if(name.isEmpty()){
 						JOptionPane.showMessageDialog(null, "Can't leave Name empty");
 					}else {
 						JOptionPane.showMessageDialog(null, "Can't leave ID empty");
 					}
 				}
-				else if(student.isEmpty()){
+				else if(student.isEmpty()){ //If student list is empty add the 1st student in
 					student.add(new Student(name, id));
 					System.out.println("New student created!");
 				}
 				else {
-					for(Student s : student) {
+					for(Student s : student) { //Check if the student already exists
 						if(s.getName().equals(name) && s.getId().equals(id)) {
 							JOptionPane.showMessageDialog(null, "Student already exists");
 							flag = true;
 							break;
 						}
 					}
-					if(!flag) {
+					if(!flag) { //If they don't exist add them in the list
 						student.add(new Student(name, id));
 						System.out.println("New student created!");
 					}
@@ -121,25 +124,25 @@ public class GUI extends JFrame {
 		createCourse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String course = courseField.getText();
+				String course = courseField.getText(); //Get the course
 				boolean flag = false;
 				
-				if(course.isEmpty()) {
+				if(course.isEmpty()) { //If field is empty show message
 					JOptionPane.showMessageDialog(null, "Can't leave course empty");
 				}
-				else if(courses.isEmpty()){
+				else if(courses.isEmpty()){ //If course list is empty
 					courses.add(new Course(course));
 					System.out.println("New course added");
 				}
 				else {
-					for(Course c : courses) {
+					for(Course c : courses) { //If course already exists
 						if(c.getTitle().equals(course)){
 							JOptionPane.showMessageDialog(null, "Course already exists");
 							flag = true;
 							break;
 						}
 					}
-					if(!flag) {
+					if(!flag) { //If the course doesn't exist add it in the list
 						courses.add(new Course(course));
 						System.out.println("New course added");
 					}
@@ -150,14 +153,14 @@ public class GUI extends JFrame {
 		addInCourse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String course = courseField.getText();
-				String name = nameField.getText();
-				String id = idField.getText();
+				String course = courseField.getText(); //Get the course
+				String name = nameField.getText(); //Get the name
+				String id = idField.getText(); //Get the id
 				
 				boolean flag = false;
 				boolean flag1 = false;
 				
-				if(course.isEmpty() || name.isEmpty() || id.isEmpty()) {
+				if(course.isEmpty() || name.isEmpty() || id.isEmpty()) { //If a field is empty show message
 					if(course.isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Can't leave Course empty");
 					}
@@ -169,12 +172,12 @@ public class GUI extends JFrame {
 					}
 
 				}else {
-					for(Course c : courses) {
+					for(Course c : courses) { //If course exists
 						if(c.getTitle().equals(course)){
-							for(Student s : student) {
+							for(Student s : student) { //If student exists
 								if(s.getName().equals(name) && s.getId().equals(id)) {
 									c.addStudent(s);
-									System.out.println("Student added");
+									System.out.println("Student added"); //Enroll student in course
 									flag1 = true;
 									break;
 								}
@@ -183,11 +186,11 @@ public class GUI extends JFrame {
 							break;
 						}
 					}
-					if(!flag) {
+					if(!flag) { //If course doesn't exist
 						JOptionPane.showMessageDialog(null, "Course doesn't exist");
-						flag1 = true;
+						flag1 = true; //Make flag true so the message for the student wont appear
 					}
-					if(!flag1) {
+					if(!flag1) { //If student doesn't exist
 						JOptionPane.showMessageDialog(null, "Student doesn't exist");
 					}
 				}
@@ -196,6 +199,7 @@ public class GUI extends JFrame {
 		
 		secondpanel.setLayout(null);
 		
+		//Add a text area with the details of the course and a back to main panel button
 		detailsArea = new JTextArea();
 		detailsArea.setBounds(10, 5, 475, 220);
 		detailsArea.setEditable(false);
@@ -211,26 +215,26 @@ public class GUI extends JFrame {
 		printCourseDetails.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String course = courseField.getText();
+				String course = courseField.getText(); //Get course
 				
 				boolean flag = false;
 				
-				if(course.isEmpty()) {
+				if(course.isEmpty()) { //If field is empty show message
 					JOptionPane.showMessageDialog(null, "Can't leave course empty");
 				}else {
 					Course selectedCourse = null;
 					
-					for(Course c : courses) {
+					for(Course c : courses) { //Find the course
 						if(c.getTitle().equals(course)){
 							selectedCourse = c;
 							flag = true;
 							break;
 						}							
 					}
-					if(flag) {
+					if(flag) { //If course exists show its details in the new panel
 						detailsArea.setText(selectedCourse.printDetails());
 						layout.show(deck, "second");
-					}else {
+					}else { 
 						JOptionPane.showMessageDialog(null, "Course doesn't exist");					
 					}
 				}
@@ -240,7 +244,7 @@ public class GUI extends JFrame {
 		backToMainPanel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				layout.show(deck, "first");
+				layout.show(deck, "first"); //Change to main panel
 			}
 		});
 		
